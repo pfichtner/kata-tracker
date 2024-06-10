@@ -10,8 +10,10 @@ Seen at our first [Samman Society Unconference at Vienna 2024](https://www.samma
 At the moment it consists of three parts: 
 - JUnit extension that sends the result of tests to a MQTT broker. 
 - Tracker that counts green/red. The UI code was copies from Llew but instead of reading from file it gets its values by subscribing to the mqtt broker. Also the UI plays the red/green sound files by itself, they also were included what Llew did
+
 ![tracker](https://raw.githubusercontent.com/pfichtner/kata-tracker/main/src/test/resources/org/counterdisplay/CounterDisplayTest.oneToTwo.Linux.approved.png)
 - Graph that shows the red/green timeline and some statistics such as "longest time in red". The values are also retrieved by subscribing to the mqtt broker. 
+
 ![chart](https://raw.githubusercontent.com/pfichtner/kata-tracker/main/src/test/resources/com/github/pfichtner/samman/kata/chart/TimeSeriesChartTest.withData.Linux.approved.png)
 
 ...more to come
