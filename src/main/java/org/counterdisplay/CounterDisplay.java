@@ -34,13 +34,19 @@ public class CounterDisplay extends JPanel {
 	private int sucessCount;
 	private int failureCount;
 
-	private final MqttBroker mqttBroker;
-	private final MqttConnection mqttConnection;
+	private MqttBroker mqttBroker;
+	private MqttConnection mqttConnection;
 
-	public CounterDisplay(MqttBroker mqttBroker, MqttConnection mqttConnection) {
-		this.mqttBroker = mqttBroker;
-		this.mqttConnection = mqttConnection;
+	public CounterDisplay() {
 		setPreferredSize(new Dimension(200, 100));
+	}
+
+	public void setMqttConnection(MqttConnection mqttConnection) {
+		this.mqttConnection = mqttConnection;
+	}
+
+	public void setMqttBroker(MqttBroker mqttBroker) {
+		this.mqttBroker = mqttBroker;
 	}
 
 	public void update(Period period) {
@@ -114,7 +120,9 @@ public class CounterDisplay extends JPanel {
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.setAlwaysOnTop(true);
 			frame.setResizable(false);
-			CounterDisplay counterDisplay = new CounterDisplay(mqttBroker, mqttConnection);
+			CounterDisplay counterDisplay = new CounterDisplay();
+			counterDisplay.setMqttBroker(mqttBroker);
+			counterDisplay.setMqttConnection(mqttConnection);
 			mqttConnection.setListener(counterDisplay::update);
 
 			frame.getContentPane().add(counterDisplay);

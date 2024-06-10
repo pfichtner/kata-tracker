@@ -41,13 +41,10 @@ public class TimeSeriesChart extends JPanel {
 	private int totalTimeInGreen;
 	private int longestTimeInRed;
 
-	private final MqttBroker mqttBroker;
-	private final MqttConnection mqttConnection;
+	private MqttBroker mqttBroker;
+	private MqttConnection mqttConnection;
 
-	public TimeSeriesChart(MqttBroker mqttBroker, MqttConnection mqttConnection) {
-		this.mqttBroker = mqttBroker;
-		this.mqttConnection = mqttConnection;
-
+	public TimeSeriesChart() {
 		updateLabels();
 		setPreferredSize(new Dimension(800, 200));
 		setLayout(new BorderLayout());
@@ -60,6 +57,14 @@ public class TimeSeriesChart extends JPanel {
 		infoPanel.add(longestTimeInRedLabel);
 
 		add(infoPanel, BorderLayout.SOUTH);
+	}
+
+	public void setMqttConnection(MqttConnection mqttConnection) {
+		this.mqttConnection = mqttConnection;
+	}
+
+	public void setMqttBroker(MqttBroker mqttBroker) {
+		this.mqttBroker = mqttBroker;
 	}
 
 	public void update(Period period) {
@@ -149,7 +154,9 @@ public class TimeSeriesChart extends JPanel {
 				: null;
 		MqttConnection mqttConnection = new MqttConnection(hostname, port);
 		invokeLater(() -> {
-			TimeSeriesChart chart = new TimeSeriesChart(mqttBroker, mqttConnection);
+			TimeSeriesChart chart = new TimeSeriesChart();
+			chart.setMqttBroker(mqttBroker);
+			chart.setMqttConnection(mqttConnection);
 			mqttConnection.setListener(chart::update);
 			JFrame frame = new JFrame("Time Series Chart");
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

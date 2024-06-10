@@ -10,12 +10,12 @@ class CounterDisplayTest {
 
 	@Test
 	void empty() {
-		verify(new CounterDisplay(null, null));
+		verify(new CounterDisplay());
 	}
 
 	@Test
 	void oneToTwo() {
-		CounterDisplay sut = new CounterDisplay(null, null);
+		CounterDisplay sut = new CounterDisplay();
 		sut.update(new Period(0, "red"));
 		sut.update(new Period(0, "green"));
 		sut.update(new Period(0, "red"));

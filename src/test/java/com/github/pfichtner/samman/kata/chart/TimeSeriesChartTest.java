@@ -8,12 +8,12 @@ class TimeSeriesChartTest {
 
 	@Test
 	void empty() {
-		verify(new TimeSeriesChart(null, null));
+		verify(new TimeSeriesChart());
 	}
 
 	@Test
 	void withData() {
-		TimeSeriesChart sut = new TimeSeriesChart(null, null);
+		TimeSeriesChart sut = new TimeSeriesChart();
 		int now = 4242;
 		sut.update(new Period(now + 0, "red"));
 		sut.update(new Period(now + 4, "green"));
