@@ -16,12 +16,14 @@ Seen at our first [Samman Society](https://www.sammancoaching.org/) Unconference
 
 At the moment it consists of three parts: 
 - JUnit extension that sends the result of tests to a MQTT broker. 
-- Tracker that counts green/red. The UI code was copies from Llew but instead of reading from file it gets its values by subscribing to the mqtt broker. Also the UI plays the red/green sound files by itself, they also were included what Llew did
+- Tracker that counts green/red. The UI code was copies from Llew but instead of reading from file it gets its values by subscribing to the mqtt broker. Also the UI plays the red/green sound files by itself, they also were included what Llew did. 
 
 ![tracker](https://raw.githubusercontent.com/pfichtner/kata-tracker/main/src/test/resources/org/counterdisplay/CounterDisplayTest.oneToTwo.Linux.approved.png)
 - Graph that shows the red/green timeline and some statistics such as "longest time in red". The values are also retrieved by subscribing to the mqtt broker. 
 
 ![chart](https://raw.githubusercontent.com/pfichtner/kata-tracker/main/src/test/resources/com/github/pfichtner/samman/kata/chart/TimeSeriesChartTest.withData.Linux.approved.png)
+
+The UIs start and stop a MQTT broker within the JVM if there is no server running on port 1883 (default mqtt port)
 
 ...more to come
 
