@@ -2,10 +2,17 @@
 
 Track state and trend of your kata/dojo workflow. 
 
+#### TL;DR
+This once will become a maven-central-hosted junit-extension. Until then the easiest way to use it is: 
+- Check out this project
+- Start the CounterDisplay or the TimeSeriesChart (or both)
+- Do a kata and annotate your test class with @RedGreenTracking
+- Have fun :)
+
 Heavily inspired by/based on ideas of [Llewellyn Falco](https://github.com/isidore) (the tracker: https://github.com/LearnWithLlew/ExtremeFakeItTillYouMakeIt.Java) 
 and [Nitsan Avni](https://github.com/nitsanavni) (the chart/graph https://github.com/nitsanavni/katas/tree/main/shortest-longest-red). 
 
-Seen at our first [Samman Society Unconference at Vienna 2024](https://www.sammancoaching.org/)
+Seen at our first [Samman Society](https://www.sammancoaching.org/) Unconference at Vienna in 2024. 
 
 At the moment it consists of three parts: 
 - JUnit extension that sends the result of tests to a MQTT broker. 
