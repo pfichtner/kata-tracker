@@ -5,15 +5,17 @@ Track state and trend of your kata/dojo workflow.
 #### TL;DR
 This once will become a maven-central-hosted junit-extension. Until then the easiest way to use it is: 
 - Check out this project
-- Start the CounterDisplay or the TimeSeriesChart (or both)
-- Do a kata and annotate your test class with @RedGreenTracking
+- Start the ```CounterDisplay``` or the ```TimeSeriesChart``` (or both)
+- Do a kata and annotate your test class with ```@RedGreenTracking```
 - Have fun :)
 
+#### References
 Heavily inspired by/based on ideas of [Llewellyn Falco](https://github.com/isidore) (the tracker: https://github.com/LearnWithLlew/ExtremeFakeItTillYouMakeIt.Java) 
 and [Nitsan Avni](https://github.com/nitsanavni) (the chart/graph https://github.com/nitsanavni/katas/tree/main/shortest-longest-red). 
 
 Seen at our first [Samman Society](https://www.sammancoaching.org/) Unconference at Vienna in 2024. 
 
+#### What's it all about? 
 At the moment it consists of three parts: 
 - JUnit extension that sends the result of tests to a MQTT broker. 
 - Tracker that counts green/red. The UI code was copies from Llew but instead of reading from file it gets its values by subscribing to the mqtt broker. Also the UI plays the red/green sound files by itself, they also were included what Llew did. 
@@ -28,10 +30,11 @@ The UIs start and stop a MQTT broker within the JVM if there is no server runnin
 ...more to come
 
 
-Caveats: 
+#### Caveats
 - If you run multiple tests, each result is published, so gren, red, green, green test results in four tests would count as as very short red phase
+- If one of the UIs started the MQTT broker the broker will stop if this UI is stopped
 
-Ideas: 
+#### Ideas
 - Replace MQTT by HTTP (PUT and GET with long pollling (HTTP PUT shouldn't be slower than MQTT pub)
   - We then could keep track of the states withing the HTTP server
   - We can draw graphs there as well
