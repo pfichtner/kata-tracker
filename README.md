@@ -1,6 +1,6 @@
 # kata-tracker
 
-Track state and trend of your kata/dojo workflow. 
+Track state and trend of your Java/JVM kata/dojo workflow. 
 
 #### TL;DR
 This once will become a maven-central-hosted junit-extension. Until then the easiest way to use it is: 
