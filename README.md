@@ -35,6 +35,7 @@ The UIs start and stop a MQTT broker within the JVM if there is no server runnin
 - If one of the UIs started the MQTT broker the broker will stop if this UI is stopped
 
 #### Ideas
+- Write to File (as it used to be) so nothing gets lost even if no server is running
 - Replace MQTT by HTTP (PUT and GET with long pollling (HTTP PUT shouldn't be slower than MQTT pub)
   - We then could keep track of the states withing the HTTP server
   - We can draw graphs there as well
