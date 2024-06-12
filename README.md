@@ -6,8 +6,8 @@ Track state and trend of your Java/JVM kata/dojo workflow.
 This once will become a maven-central-hosted junit-extension. Until then the easiest way to use it is: 
 - Check out this project
 - Start the ```CounterDisplay``` or the ```TimeSeriesChart``` (or both)
-- Do a kata and annotate your test class with ```@RedGreenTracking```
-- Have fun :)
+- ~~Do a kata and annotate your test class with ```@RedGreenTracking``` <-- no more needed since in this project we use ServiceLoader for auto registering the extension~~
+- Do a kata and have fun :)
 
 #### References
 Heavily inspired by/based on ideas of [Llewellyn Falco](https://github.com/isidore) (the tracker: https://github.com/LearnWithLlew/ExtremeFakeItTillYouMakeIt.Java) 
