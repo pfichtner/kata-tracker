@@ -21,10 +21,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import com.github.pfichtner.samman.kata.redgreentracker.consumer.MqttResultConsumer;
-import com.github.pfichtner.samman.kata.redgreentracker.consumer.ResultConsumer;
-import com.github.pfichtner.samman.kata.redgreentracker.consumer.ResultConsumers;
-
 public class TimeSeriesChart extends JPanel {
 
 	private static final long serialVersionUID = 1L;
