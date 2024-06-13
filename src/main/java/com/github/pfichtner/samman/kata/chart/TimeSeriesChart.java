@@ -41,9 +41,6 @@ public class TimeSeriesChart extends JPanel {
 	private int totalTimeInGreen;
 	private int longestTimeInRed;
 
-	private MqttBroker mqttBroker;
-	private MqttConnection mqttConnection;
-
 	public TimeSeriesChart() {
 		updateLabels();
 		setPreferredSize(new Dimension(800, 200));
@@ -57,14 +54,6 @@ public class TimeSeriesChart extends JPanel {
 		infoPanel.add(longestTimeInRedLabel);
 
 		add(infoPanel, BorderLayout.SOUTH);
-	}
-
-	public void setMqttConnection(MqttConnection mqttConnection) {
-		this.mqttConnection = mqttConnection;
-	}
-
-	public void setMqttBroker(MqttBroker mqttBroker) {
-		this.mqttBroker = mqttBroker;
 	}
 
 	public void update(Period period) {
@@ -143,10 +132,6 @@ public class TimeSeriesChart extends JPanel {
 		}
 	}
 
-	private void close() throws Exception {
-		Stream.of(mqttConnection, mqttBroker).forEach(Closeables::closeQuiety);
-	}
-
 	public static void main(String[] args) throws Exception {
 		String hostname = "localhost";
 		int port = 1883;
@@ -155,8 +140,6 @@ public class TimeSeriesChart extends JPanel {
 		MqttConnection mqttConnection = new MqttConnection(hostname, port);
 		invokeLater(() -> {
 			TimeSeriesChart chart = new TimeSeriesChart();
-			chart.setMqttBroker(mqttBroker);
-			chart.setMqttConnection(mqttConnection);
 			mqttConnection.setListener(chart::update);
 			JFrame frame = new JFrame("Time Series Chart");
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -164,11 +147,7 @@ public class TimeSeriesChart extends JPanel {
 			frame.addWindowListener(new WindowAdapter() {
 				@Override
 				public void windowClosing(WindowEvent event) {
-					try {
-						chart.close();
-					} catch (Exception e) {
-						throw new RuntimeException(e);
-					}
+					Stream.of(mqttConnection, mqttBroker).forEach(Closeables::closeQuiety);
 				}
 			});
 

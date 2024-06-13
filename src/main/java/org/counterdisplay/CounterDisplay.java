@@ -34,19 +34,8 @@ public class CounterDisplay extends JPanel {
 	private int sucessCount;
 	private int failureCount;
 
-	private MqttBroker mqttBroker;
-	private MqttConnection mqttConnection;
-
 	public CounterDisplay() {
 		setPreferredSize(new Dimension(200, 100));
-	}
-
-	public void setMqttConnection(MqttConnection mqttConnection) {
-		this.mqttConnection = mqttConnection;
-	}
-
-	public void setMqttBroker(MqttBroker mqttBroker) {
-		this.mqttBroker = mqttBroker;
 	}
 
 	public void update(Period period) {
@@ -105,10 +94,6 @@ public class CounterDisplay extends JPanel {
 		});
 	}
 
-	private void close() throws Exception {
-		Stream.of(mqttConnection, mqttBroker).forEach(Closeables::closeQuiety);
-	}
-
 	public static void main(String[] args) throws Exception {
 		String hostname = "localhost";
 		int port = 1883;
@@ -121,8 +106,6 @@ public class CounterDisplay extends JPanel {
 			frame.setAlwaysOnTop(true);
 			frame.setResizable(false);
 			CounterDisplay counterDisplay = new CounterDisplay();
-			counterDisplay.setMqttBroker(mqttBroker);
-			counterDisplay.setMqttConnection(mqttConnection);
 			mqttConnection.setListener(counterDisplay::update);
 
 			frame.getContentPane().add(counterDisplay);
@@ -130,7 +113,7 @@ public class CounterDisplay extends JPanel {
 				@Override
 				public void windowClosing(WindowEvent event) {
 					try {
-						counterDisplay.close();
+						Stream.of(mqttConnection, mqttBroker).forEach(Closeables::closeQuiety);
 					} catch (Exception e) {
 						throw new RuntimeException(e);
 					}
