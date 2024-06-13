@@ -1,6 +1,7 @@
 package com.github.pfichtner.samman.kata.chart;
 
 import static com.github.pfichtner.samman.kata.io.Closeables.closeQuiety;
+import static com.github.pfichtner.samman.kata.redgreentracker.consumer.ResultConsumers.defaultConsumer;
 import static com.github.pfichtner.samman.kata.swing.Windows.centerWindow;
 import static java.lang.String.format;
 import static javax.swing.SwingUtilities.invokeLater;
@@ -22,6 +23,7 @@ import javax.swing.SwingUtilities;
 
 import com.github.pfichtner.samman.kata.redgreentracker.consumer.MqttResultConsumer;
 import com.github.pfichtner.samman.kata.redgreentracker.consumer.ResultConsumer;
+import com.github.pfichtner.samman.kata.redgreentracker.consumer.ResultConsumers;
 
 public class TimeSeriesChart extends JPanel {
 
@@ -131,11 +133,11 @@ public class TimeSeriesChart extends JPanel {
 	}
 
 	public static void main(String[] args) throws Exception {
-		ResultConsumer resultConsumer = new MqttResultConsumer();
+		var resultConsumer = defaultConsumer();
 		invokeLater(() -> {
 			TimeSeriesChart chart = new TimeSeriesChart();
 			resultConsumer.setListener(chart::update);
-			JFrame frame = new JFrame("Time Series Chart");
+			var frame = new JFrame("Time Series Chart");
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.setAlwaysOnTop(true);
 			frame.addWindowListener(new WindowAdapter() {

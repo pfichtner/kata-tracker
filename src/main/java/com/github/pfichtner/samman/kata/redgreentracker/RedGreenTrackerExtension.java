@@ -1,5 +1,6 @@
 package com.github.pfichtner.samman.kata.redgreentracker;
 
+import static com.github.pfichtner.samman.kata.redgreentracker.reporter.ResultReporters.defaultReporter;
 import static java.time.LocalDateTime.now;
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
 
@@ -9,7 +10,6 @@ import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestExecutionExceptionHandler;
 
-import com.github.pfichtner.samman.kata.redgreentracker.reporter.MqttReporter;
 import com.github.pfichtner.samman.kata.redgreentracker.reporter.Reporter;
 
 public class RedGreenTrackerExtension implements AfterAllCallback, TestExecutionExceptionHandler {
@@ -20,7 +20,7 @@ public class RedGreenTrackerExtension implements AfterAllCallback, TestExecution
 	public RedGreenTrackerExtension() {
 		newSingleThreadExecutor().submit(() -> {
 			try {
-				completableFuture.complete(new MqttReporter());
+				completableFuture.complete(defaultReporter());
 			} catch (Exception e) {
 				completableFuture.completeExceptionally(e);
 			}

@@ -1,6 +1,7 @@
 package org.counterdisplay;
 
 import static com.github.pfichtner.samman.kata.io.Closeables.closeQuiety;
+import static com.github.pfichtner.samman.kata.redgreentracker.consumer.ResultConsumers.defaultConsumer;
 import static com.github.pfichtner.samman.kata.swing.Windows.centerWindow;
 import static javax.swing.SwingUtilities.invokeLater;
 
@@ -93,9 +94,9 @@ public class CounterDisplay extends JPanel {
 	}
 
 	public static void main(String[] args) throws Exception {
-		ResultConsumer resultConsumer = new MqttResultConsumer();
+		var resultConsumer = defaultConsumer();
 		invokeLater(() -> {
-			JFrame frame = new JFrame("Testing Frame");
+			var frame = new JFrame("Testing Frame");
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.setAlwaysOnTop(true);
 			frame.setResizable(false);
