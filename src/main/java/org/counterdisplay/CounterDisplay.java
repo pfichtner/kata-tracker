@@ -1,6 +1,6 @@
 package org.counterdisplay;
 
-import static com.github.pfichtner.samman.kata.io.Sockets.portIsAvailable;
+import static com.github.pfichtner.samman.kata.io.Closeables.closeQuiety;
 import static com.github.pfichtner.samman.kata.swing.Windows.centerWindow;
 import static javax.swing.SwingUtilities.invokeLater;
 
@@ -12,16 +12,14 @@ import java.awt.Graphics;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.concurrent.Executors;
-import java.util.stream.Stream;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import com.github.pfichtner.samman.kata.chart.Period;
-import com.github.pfichtner.samman.kata.io.Closeables;
-import com.github.pfichtner.samman.kata.mqtt.MqttBroker;
-import com.github.pfichtner.samman.kata.mqtt.MqttConnection;
+import com.github.pfichtner.samman.kata.redgreentracker.consumer.MqttResultConsumer;
+import com.github.pfichtner.samman.kata.redgreentracker.consumer.ResultConsumer;
 
 public class CounterDisplay extends JPanel {
 
@@ -95,28 +93,20 @@ public class CounterDisplay extends JPanel {
 	}
 
 	public static void main(String[] args) throws Exception {
-		String hostname = "localhost";
-		int port = 1883;
-		MqttBroker mqttBroker = portIsAvailable(port) ? MqttBroker.builder().host(hostname).port(port).startBroker()
-				: null;
-		MqttConnection mqttConnection = new MqttConnection(hostname, port);
+		ResultConsumer resultConsumer = new MqttResultConsumer();
 		invokeLater(() -> {
 			JFrame frame = new JFrame("Testing Frame");
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.setAlwaysOnTop(true);
 			frame.setResizable(false);
 			CounterDisplay counterDisplay = new CounterDisplay();
-			mqttConnection.setListener(counterDisplay::update);
+			resultConsumer.setListener(counterDisplay::update);
 
 			frame.getContentPane().add(counterDisplay);
 			frame.addWindowListener(new WindowAdapter() {
 				@Override
 				public void windowClosing(WindowEvent event) {
-					try {
-						Stream.of(mqttConnection, mqttBroker).forEach(Closeables::closeQuiety);
-					} catch (Exception e) {
-						throw new RuntimeException(e);
-					}
+					closeQuiety(resultConsumer);
 				}
 			});
 
